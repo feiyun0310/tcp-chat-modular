@@ -1,0 +1,41 @@
+syntax = "proto3";
+package chat;
+
+message LoginRequest { string nickname = 1; string channel_id = 2; }
+message SendMessageRequest { string content = 1; }
+message QuitRequest {}
+
+message ClientEnvelope {
+  string request_id = 1;
+  oneof payload {
+    LoginRequest login = 2;
+    SendMessageRequest send_message = 3;
+    QuitRequest quit = 4;
+  }
+}
+
+message ChatMessage {
+  string channel_id = 1;
+  string sender_id = 2;
+  string content = 3;
+  int64 timestamp_ms = 4;
+}
+message LoginResponse { bool success = 1; string message = 2; repeated ChatMessage history = 3; }
+message SendMessageResponse { bool success = 1; string message = 2; }
+message QuitResponse { bool success = 1; }
+message SystemMessage { string content = 1; }
+message ErrorResponse { string code = 1; string message = 2; }
+
+message ServerEnvelope {
+  string request_id = 1;
+  oneof payload {
+    LoginResponse login_response = 2;
+    SendMessageResponse send_message_response = 3;
+    QuitResponse quit_response = 4;
+    ChatMessage chat_message = 5;
+    SystemMessage system_message = 6;
+    ErrorResponse error = 7;
+  }
+}
+
+

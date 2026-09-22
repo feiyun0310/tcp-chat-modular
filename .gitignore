@@ -1,0 +1,6 @@
+/bin/
+/build/
+/protocol.pb.h
+/protocol.pb.cc
+__pycache__/
+*.pyc
